@@ -68,16 +68,15 @@ void printAnimation(LinkedList nameList) async {
   int nameIndex = 0;
   String currentColor = reset; // Mulai dengan warna putih (default)
 
-  // Mengambil ukuran terminal secara dinamis
+  // Mengambil ukuran terminal 
   int width = stdout.terminalColumns;
   int height = stdout.terminalLines;
 
   while (true) {
-    // Loop tak terbatas untuk animasi berkelanjutan
     for (int row = 0; row < height; row++) {
       if (row % 2 == 0) {
         // Baris genap: kiri ke kanan
-        stdout.write('\x1B[${row + 1};1H'); // Pindah ke awal baris
+        stdout.write('\x1B[${row + 1};1H');
         for (int col = 0; col < width; col++) {
           stdout.write('$currentColor${name[nameIndex]}$reset');
           nameIndex = (nameIndex + 1) % name.length;
@@ -87,7 +86,7 @@ void printAnimation(LinkedList nameList) async {
         // Baris ganjil: kanan ke kiri
         for (int col = width - 1; col >= 0; col--) {
           stdout.write(
-              '\x1B[${row + 1};${col + 1}H'); // Pindah ke posisi spesifik
+              '\x1B[${row + 1};${col + 1}H'); 
           stdout.write('$currentColor${name[nameIndex]}$reset');
           nameIndex = (nameIndex + 1) % name.length;
           await Future.delayed(Duration(milliseconds: 10));
@@ -95,15 +94,15 @@ void printAnimation(LinkedList nameList) async {
       }
     }
 
-    // Ganti warna setelah satu putaran lengkap
+    // Ganti warna setelah satu putaran
     currentColor = getRandomColor();
-
-    // Update ukuran terminal setiap kali mulai dari atas
+    // Update ukuran terminal
     width = stdout.terminalColumns;
     height = stdout.terminalLines;
   }
 }
 
+// Function untuk meminta input nama, tidak boleh null
 String inputName() {
   while (true) {
     stdout.write("Masukkan Nama: ");
@@ -117,7 +116,7 @@ String inputName() {
 }
 
 void main() {
-  // Membuat linked list dan menambahkan huruf-huruf dari nama
+  // Membuat linked list dari nama yang di input
   LinkedList nameList = LinkedList();
   String name = inputName();
   for (int i = 0; i < name.length; i++) {
